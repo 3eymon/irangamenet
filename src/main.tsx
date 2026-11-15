@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { isNotFoundError } from "./utils/isNotFoundErr";
+import ScrollToTop from "./components/ScrollToTop";
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
@@ -23,6 +24,7 @@ const queryClient = new QueryClient({
 createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
+    <ScrollToTop />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <App />
