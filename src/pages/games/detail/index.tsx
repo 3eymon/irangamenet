@@ -22,6 +22,9 @@ import NotFound from "../../../components/NotFound";
 import Breadcrumb from "../../../components/Breadcrumb";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import MarkDownContent from "../../../components/MarkDownContent";
+import { createPortal } from "react-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
+
 type IconButtonProps = {
   label: string;
   pressed?: boolean;
@@ -84,6 +87,12 @@ export default function GamePage() {
       }
     }
   }
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 600], [0, 45]);
+
+  const scale = useTransform(scrollY, [0, 600], [1.04, 1.12]);
+
+  const opacity = useTransform(scrollY, [0, 300, 600 ,900], [0.25, 0.1, 0.05 ,0]);
   if (isLoading) return <GamePageSkeleton />;
   if (isError && !isNotFoundError(error)) {
     return (
@@ -114,9 +123,31 @@ export default function GamePage() {
 
   return (
     <main className="relative isolate w-full overflow-hidden text-white">
+      {game.cover_path && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+        >
+          <motion.img
+            src={game.cover_path}
+            alt={game.title}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            draggable={false}
+            style={{
+              y,
+              scale,
+              opacity,
+            }}
+            className="absolute inset-0 h-full w-full select-none object-cover blur-[4px]"
+          />
+        </div>
+      )}
+
       <section
         aria-labelledby="game-title"
-        className="relative isolate min-h-[100dvh] w-full overflow-hidden md:rounded-2xl flex flex-col"
+        className="relative isolate flex min-h-[100dvh] w-full flex-col overflow-hidden md:rounded-2xl"
       >
         <div className="grid min-h-[100dvh] grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-12 lg:px-12">
           <section className="flex flex-col justify-center gap-6 lg:py-2">
@@ -134,7 +165,7 @@ export default function GamePage() {
 
                 <h1
                   id="game-title"
-                  className="text-3xl font-black sm:text-4xl lg:text-5xl "
+                  className="text-3xl font-black sm:text-4xl lg:text-5xl"
                 >
                   {game.title}
                 </h1>
@@ -171,7 +202,7 @@ export default function GamePage() {
                   {game.platforms.map((platform) => (
                     <span
                       key={platform}
-                      className="rounded font-Jaro border border-white/20 bg-white/5 px-2 py-1 text-sm text-zinc-200"
+                      className="rounded border border-white/20 bg-white/5 px-2 py-1 font-Jaro text-sm text-zinc-200"
                     >
                       {platform}
                     </span>
@@ -186,7 +217,7 @@ export default function GamePage() {
                   <Link
                     to={`/games/category/${category.slug}`}
                     key={category.slug}
-                    className="-skew-x-12 border border-primary-400/40 bg-primary-500/15 hover:shadow-md hover:shadow-primary-500/50 transition-shadow ease-linear px-3 py-1 text-xs"
+                    className="-skew-x-12 border border-primary-400/40 bg-primary-500/15 px-3 py-1 text-xs transition-shadow ease-linear hover:shadow-md hover:shadow-primary-500/50"
                   >
                     <span className="inline-block skew-x-12">
                       {category.title}
@@ -195,7 +226,7 @@ export default function GamePage() {
                 ))}
               </div>
 
-              <p className="max-w-2xl line-clamp-4 text-sm leading-8 text-zinc-300 sm:text-base">
+              <p className="line-clamp-4 max-w-2xl text-sm leading-8 text-zinc-300 sm:text-base">
                 {game.description}
               </p>
             </div>
@@ -207,7 +238,7 @@ export default function GamePage() {
                     <span className="text-xs">تاریخ انتشار</span>
                   </div>
 
-                  <p className="max-sm:text-base text-lg font-bold font-Jaro">
+                  <p className="font-Jaro text-lg font-bold max-sm:text-base">
                     {game.release_date}
                   </p>
                 </div>
@@ -242,17 +273,11 @@ export default function GamePage() {
                   type="button"
                   aria-pressed={inList}
                   onClick={() => setInList((value) => !value)}
-                  className={`
-                  -skew-x-12 px-4 py-3 text-sm font-bold
-                  transition focus-visible:outline focus-visible:outline-2
-                  focus-visible:outline-offset-2 focus-visible:outline-primary-300
-                  sm:px-5
-                  ${
+                  className={`-skew-x-12 px-4 py-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 sm:px-5 ${
                     inList
                       ? "border border-primary-400 bg-primary-500/20"
                       : "bg-primary-500 hover:bg-primary-600"
-                  }
-                `}
+                  } `}
                 >
                   <span className="flex skew-x-12 items-center gap-2">
                     {inList ? (
@@ -335,7 +360,7 @@ export default function GamePage() {
                 <h2 className="text-xl font-bold">تصاویر بازی</h2>
                 <AccentBar />
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
                 {game.screenshots?.length ? (
                   game.screenshots.slice(0, 3).map((screenshot, index) => {
                     const remaining = game.screenshots
@@ -346,7 +371,7 @@ export default function GamePage() {
                     return (
                       <div
                         key={`${screenshot}-${index}`}
-                        className="group relative w-56 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#1b2432] shadow-lg sm:w-64 lg:w-full"
+          className="group relative min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#1b2432] shadow-lg"
                       >
                         <Image
                           src={screenshot}
@@ -361,11 +386,11 @@ export default function GamePage() {
                             onClick={() => setModal(true)}
                             className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/5 text-white backdrop-blur-[2px] transition hover:bg-black/10"
                           >
-                            <div className="rounded-full border border-white/20 bg-white/10 p-3">
-                              <PhotoIcon className="size-6" />
+                            <div className="rounded-full border border-white/20 bg-white/10 p-1.5 sm:p-3">
+                              <PhotoIcon className="size-4 sm:size-6" />
                             </div>
 
-                            <span className="text-sm font-semibold">
+                            <span className="text-xs font-semibold sm:text-sm">
                               مشاهده {remaining} تصویر دیگر
                             </span>
                           </button>
@@ -393,10 +418,10 @@ export default function GamePage() {
         <img
           onClick={scroll}
           src="/images/games/88221.png"
-          className="max-lg:hidden absolute bottom-20 left-1/2 -translate-x-1/2 w-6 invert mx-auto cursor-pointer animate-bounce animate-infinite animate-ease-linear animate-duration-[2000ms]"
+          className="absolute bottom-20 left-1/2 mx-auto w-6 -translate-x-1/2 animate-bounce cursor-pointer invert animate-duration-[2000ms] animate-infinite animate-ease-linear max-lg:hidden"
         />
       </section>
-      <section ref={around} className="px-4">
+      <section ref={around} className="relative z-10 px-4">
         {game.system && game.system?.length > 0 && (
           <MarkDownContent content={game.system} />
         )}
@@ -503,17 +528,11 @@ function IconButton({ label, pressed, onClick, children }: IconButtonProps) {
       title={label}
       aria-pressed={pressed}
       onClick={onClick}
-      className={`
-        grid size-10 shrink-0 -skew-x-12 place-items-center
-        border transition duration-200
-        focus-visible:outline focus-visible:outline-2
-        focus-visible:outline-offset-2 focus-visible:outline-primary-300
-        ${
-          pressed
-            ? "border-primary-400 bg-primary-500/25 text-primary-300"
-            : "border-white/20 text-white hover:border-primary-400 hover:text-primary-300"
-        }
-      `}
+      className={`grid size-10 shrink-0 -skew-x-12 place-items-center border transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 ${
+        pressed
+          ? "border-primary-400 bg-primary-500/25 text-primary-300"
+          : "border-white/20 text-white hover:border-primary-400 hover:text-primary-300"
+      } `}
     >
       <span className="skew-x-12">{children}</span>
     </button>
