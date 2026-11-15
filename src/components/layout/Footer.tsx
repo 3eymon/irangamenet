@@ -10,7 +10,7 @@ function Footer() {
         <div className="text-center  flex justify-center items-center gap-5  py-3">
           {/* Discord */}
           <a
-            href="http://"
+            href="http://github.com/3eymon"
             title="Discord"
             target="_blank"
             className=" [&>svg]:h-5 [&>svg]:w-5 hover:scale-110 transition-all ease-linear "
@@ -27,7 +27,7 @@ function Footer() {
           </a>
           {/* Instagram */}
           <a
-            href="http://"
+            href="http://github.com/3eymon"
             title="Instagram"
             target="_blank"
             className=" [&>svg]:h-5 [&>svg]:w-5 hover:scale-110 transition-all ease-linear"
@@ -44,7 +44,7 @@ function Footer() {
           </a>
           {/* Telegram */}
           <a
-            href="http://"
+            href="http://github.com/3eymon"
             title="Telegram"
             target="_blank"
             className=" [&>svg]:h-5 [&>svg]:w-5 hover:scale-110 transition-all ease-linear"
@@ -61,7 +61,7 @@ function Footer() {
           </a>
           {/* Twitch */}
           <a
-            href="http://"
+            href="http://github.com/3eymon"
             title="Twitch"
             target="_blank"
             className=" [&>svg]:h-5 [&>svg]:w-5 hover:scale-110 transition-all ease-linear"
