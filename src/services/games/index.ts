@@ -26,7 +26,7 @@ export const getAllGames = async ({
             break;
 
         case GameFilterOptions.latest:
-            query = query.order("created_at", { ascending: false });
+            query = query.order("release_date", { ascending: false });
             break;
     }
     if (search && search.length > 0) {
