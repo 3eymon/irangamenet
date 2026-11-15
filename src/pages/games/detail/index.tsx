@@ -24,6 +24,7 @@ import { PhotoIcon } from "@heroicons/react/24/solid";
 import MarkDownContent from "../../../components/MarkDownContent";
 import { createPortal } from "react-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
+import ScreenshotGallery from "../components/ScreenshotGallery";
 
 type IconButtonProps = {
   label: string;
@@ -355,64 +356,14 @@ export default function GamePage() {
               )}
             </div>
 
-            <div>
-              <div className="mb-4">
-                <h2 className="text-xl font-bold">تصاویر بازی</h2>
-                <AccentBar />
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                {game.screenshots?.length ? (
-                  game.screenshots.slice(0, 3).map((screenshot, index) => {
-                    const remaining = game.screenshots
-                      ? game.screenshots.length - 3
-                      : 0;
-                    const hasMore = index === 2 && remaining > 0;
+<div>
+  <div className="mb-4">
+    <h2 className="text-xl font-bold">تصاویر بازی</h2>
+    <AccentBar />
+  </div>
 
-                    return (
-                      <div
-                        key={`${screenshot}-${index}`}
-          className="group relative min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#1b2432] shadow-lg"
-                      >
-                        <Image
-                          src={screenshot}
-                          alt={`تصویر ${index + 1} بازی ${game.title}`}
-                          className={`aspect-video w-full object-cover transition-transform duration-500 ${
-                            hasMore ? "brightness-50" : "group-hover:scale-105"
-                          }`}
-                        />
-
-                        {hasMore && (
-                          <button
-                            onClick={() => setModal(true)}
-                            className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/5 text-white backdrop-blur-[2px] transition hover:bg-black/10"
-                          >
-                            <div className="rounded-full border border-white/20 bg-white/10 p-1.5 sm:p-3">
-                              <PhotoIcon className="size-4 sm:size-6" />
-                            </div>
-
-                            <span className="text-xs font-semibold sm:text-sm">
-                              مشاهده {remaining} تصویر دیگر
-                            </span>
-                          </button>
-                        )}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div className="flex min-h-40 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-white/10 px-4 text-center">
-                    <div className="rounded-full bg-white/5 p-3">
-                      <PhotoIcon className="size-6 text-gray-500" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-300">تصویری موجود نیست</p>
-                      <p className="mt-1 text-xs text-gray-500">
-                        تصاویر این بازی هنوز اضافه نشده‌اند.
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+  <ScreenshotGallery screenshots={game.screenshots} title={game.title} />
+</div>
           </aside>
         </div>
         <img
