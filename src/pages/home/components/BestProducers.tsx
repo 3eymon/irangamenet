@@ -215,10 +215,15 @@ function BestProducers({
       </div>
 
       {data && data?.length > 0 && (
-        <button className="mx-auto mt-7 flex items-center gap-1 rounded-md bg-gradient-to-r from-primary to-secondary px-6 py-1.5 text-xs font-thin shadow-primary/30 transition-opacity hover:opacity-85">
-          مشاهده ی همه ی سازنده ها
-          <ChevronLeftIcon className="h-4 w-4" />
-        </button>
+        <div className="flex items-center justify-center">
+          <Link
+            to={"/producers"}
+            className="mx-auto mt-7 flex items-center gap-1 rounded-md bg-gradient-to-r from-primary to-secondary px-6 py-1.5 text-xs font-thin shadow-primary/30 transition-opacity hover:opacity-85"
+          >
+            مشاهده ی همه ی سازنده ها
+            <ChevronLeftIcon className="h-4 w-4" />
+          </Link>
+        </div>
       )}
     </div>
   );

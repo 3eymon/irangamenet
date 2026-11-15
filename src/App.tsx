@@ -29,6 +29,8 @@ import ProfileLayout from "./components/layout/ProfileLayout";
 import SavedGames from "./pages/profile/saved-games";
 import Favorites from "./pages/profile/favorites";
 import GameCenters from "./pages/game-centers";
+import Producer from "./pages/producers/detail";
+import Producers from "./pages/producers";
 TimeAgo.addDefaultLocale(fa);
 const toastStyle: React.CSSProperties = {
   background: "rgba(24, 24, 32, 0.92)",
@@ -125,6 +127,9 @@ function App() {
               <Route path="game-centers" element={<GameCenters />} />
               {/* <Route path="game-centers/:id" element={<SingleGameCenter />} /> */}
 
+              {/* Producers */}
+              <Route element={<Producers />} path="producers" />
+              <Route element={<Producer />} path="producers/:slug" />
               {/* ------ */}
               <Route path="streamers" element={<Streamers />} />
               <Route path="about" element={<About />} />
