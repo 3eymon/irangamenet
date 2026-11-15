@@ -41,57 +41,102 @@ function ProducerSkeleton() {
   );
 }
 
-function ProducerCard({ producer }: { producer: any }) {
+const formatNumber = (value: number | null) => {
+  if (value === null) return "-";
+
+  return new Intl.NumberFormat("fa-IR", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(value);
+};
+
+const formatRevenue = (revenue: number | null, currency: string | null) => {
+  if (revenue === null) return "-";
+
+  return `${formatNumber(revenue)} ${currency ?? ""}`.trim();
+};
+
+const formatGrowth = (value: number | null) => {
+  if (value === null) return null;
+
+  return `${value > 0 ? "+" : ""}${value.toLocaleString("fa-IR")}%`;
+};
+
+function ProducerCard({ producer }: { producer: Tables<"producers"> }) {
+  const growth = formatGrowth(producer.growth_rate);
+
   return (
-    <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
-      <div className="flex min-w-0 items-center gap-2.5">
-        <Link to="#" className="shrink-0">
-          {producer.icon ? (
+    <div className="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-3 sm:gap-x-6">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <Link
+          to={`/producers/${producer.slug}`}
+          className="shrink-0"
+          aria-label={`مشاهده ${producer.name}`}
+        >
+          {producer.logo_path ? (
             <img
-              src={producer.icon}
+              src={producer.logo_path}
+              alt={producer.name}
               loading="lazy"
-              className="md:w-13 md:h-13 h-11 w-11 rounded-full bg-white object-contain p-0.5 shadow-sm shadow-black/20 ring-[3px] ring-primary-500/15"
-              alt={producer.name || ""}
+              className="size-11 rounded-full bg-white/5 object-contain p-1 shadow-sm ring-2 ring-primary-500/20 transition hover:ring-primary-500/50 sm:size-12"
             />
           ) : (
-            <BuildingOffice2Icon className="md:w-13 md:h-13 h-11 w-11 rounded-full border border-gray-600/80 bg-white/5 p-2.5 text-gray-400" />
+            <BuildingOffice2Icon
+              className="size-11 rounded-full border border-gray-600/80 bg-white/5 p-2.5 text-gray-400 sm:size-12"
+              aria-hidden="true"
+            />
           )}
         </Link>
 
         <div className="min-w-0">
           <Link
-            to="#"
-            className="block truncate text-xs font-medium underline-offset-2 hover:underline"
+            to={`/producers/${producer.slug}`}
+            className="block truncate text-xs font-semibold text-gray-100 underline-offset-4 hover:text-primary-400 hover:underline"
           >
-            {producer.name || "نامشخص"}
+            {producer.name}
           </Link>
-          <p className="mt-0.5 text-[11px] text-gray-400">
-            {producer.Founded || "-"}
+
+          <p className="mt-1 text-[11px] text-gray-400">
+            تأسیس {producer.founded_year ?? "-"}
           </p>
         </div>
       </div>
 
-      <div className="flex flex-col gap-1 text-[10px] text-gray-300">
-        <p>
-          <span className="text-gray-200">کارکنان</span>
-          <span className="mx-1.5 text-gray-500">:</span>
-          {producer.employees || "-"}
-        </p>
-        <p className="tracking-wide">
-          <span className="text-gray-200">درامد</span>
-          <span className="mx-1.5 text-gray-500">:</span>
-          {producer.Revenue || "-"}
-        </p>
+      <div className="flex flex-col gap-1.5 text-[10px] text-gray-400">
+        <div className="flex items-center gap-1.5">
+          <span>کارکنان</span>
+          <span className="font-medium text-gray-200">
+            {formatNumber(producer.employees)}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <span>درآمد</span>
+          <span className="font-medium text-gray-200">
+            {formatRevenue(producer.revenue, producer.revenue_currency)}
+          </span>
+        </div>
       </div>
 
-      <div className="hidden flex-col gap-1 sm:flex">
-        <div className="rounded bg-green-700/90 px-2 py-0.5 text-[9px] leading-none">
-          0.555%
+      {growth !== null && (
+        <div
+          className={`flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium ${
+            producer.growth_rate! > 0
+              ? "bg-green-500/10 text-green-400"
+              : producer.growth_rate! < 0
+                ? "bg-red-500/10 text-red-400"
+                : "bg-gray-500/10 text-gray-400"
+          }`}
+          dir="ltr"
+        >
+          {producer.growth_rate! > 0
+            ? "↗"
+            : producer.growth_rate! < 0
+              ? "↘"
+              : "−"}
+          {growth}
         </div>
-        <div className="rounded bg-red-700/90 px-2 py-0.5 text-[9px] leading-none">
-          0.555%
-        </div>
-      </div>
+      )}
     </div>
   );
 }
