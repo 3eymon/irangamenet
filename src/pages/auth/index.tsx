@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { PENDING_OTP_EMAIL_KEY } from "../../services/auth";
 import SendOTP from "./send-otp";
+
 export default function AuthPage() {
-  const pendingEmail = localStorage.getItem(PENDING_OTP_EMAIL_KEY);
+  const [pendingEmail] = useState(() =>
+    localStorage.getItem(PENDING_OTP_EMAIL_KEY),
+  );
 
   if (pendingEmail) {
     return (

@@ -5,7 +5,6 @@ import Input from "../../../components/ui/input";
 import {
   verifyOTP,
   PENDING_OTP_EMAIL_KEY,
-  VERIFIED_OTP_EMAIL_KEY,
   sendOTP,
 } from "../../../services/auth";
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
@@ -33,7 +32,7 @@ function VerifyOTP() {
     setError,
     clearErrors,
     resetField,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<VerifyOTPForm>({
     resolver: zodResolver(verifyOtpSchema),
     mode: "onSubmit",

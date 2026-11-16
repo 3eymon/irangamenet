@@ -4,7 +4,6 @@ import { isEnumValue } from "../../../utils/isEnumValue";
 import Input from "../../../components/ui/input";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
-  GameFilterOptions,
   NewsFilterOptions,
 } from "../../../types/common.types";
 import { useInfiniteQuery } from "@tanstack/react-query";

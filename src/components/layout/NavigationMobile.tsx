@@ -1,16 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
 import { useDimensions } from "../../hooks/use-dimensions";
-import { navbarItems } from "./Navbar";
+import { navbarItems } from "./NavbarItems";
 import "./navigation.css";
 import { Backdrop } from "@mui/material";
-import { ChevronLeftIcon, UserCircleIcon } from "@heroicons/react/24/outline";
-import { useAuth } from "../../contexts/AuthContext";
-import { useMutation } from "@tanstack/react-query";
-import { logOut } from "../../services/auth";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 import Image from "../ui/Image";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
+import { useAuth } from "../../hooks/useAuth";
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -38,25 +36,36 @@ export default function NavigationMobile() {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
-  if (isOpen) {
-    document.body.style.overflowY = "hidden";
-  } else {
-    setTimeout(() => {
-      document.body.style.overflowY = "auto";
-    }, 1000);
-  }
-  let x = window.matchMedia("(max-width: 700px)");
-  function myFunction(x: any) {
-    if (x.matches) {
-      () => toggleOpen();
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflowY = "hidden";
     } else {
-      () => toggleOpen();
+      const timeout = setTimeout(() => {
+        document.body.style.overflowY = "auto";
+      }, 1000);
+
+      return () => clearTimeout(timeout);
     }
-  }
-  myFunction(x);
-  x.addEventListener("change", function () {
-    myFunction(x);
-  });
+
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [isOpen]);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 700px)");
+
+    const handleMediaChange = (event: MediaQueryListEvent) => {
+      if (!event.matches) {
+        if (isOpen) toggleOpen();
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, [isOpen, toggleOpen]);
   return (
     <motion.div
       initial={false}
@@ -83,7 +92,9 @@ export default function NavigationMobile() {
   );
 }
 
-const Path = (props: any) => (
+type PathProps = ComponentProps<typeof motion.path>;
+
+const Path = (props: PathProps) => (
   <motion.path
     fill="transparent"
     strokeWidth="3"

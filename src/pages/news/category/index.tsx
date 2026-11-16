@@ -4,11 +4,7 @@ import Input from "../../../components/ui/input";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getAllNews, getNewsCategoryBySlug } from "../../../services/news";
-import {
-  ReactNode,
-  useMemo,
-
-} from "react";
+import { ReactNode, useMemo } from "react";
 import { isNotFoundError } from "../../../utils/isNotFoundErr";
 import ErrorState from "../../../components/ErrorState";
 import Card from "../../../components/ui/Card";
@@ -25,12 +21,7 @@ function NewsCategory() {
   const { slug } = useParams<{ slug: string }>();
   const { query, value, onChange, submit, clear } = useSearchQueryParam();
 
-  const {
-    data: newsCategory,
-    error: categoryError,
-    isLoading: categoryIsLoading,
-    isError: categoryIsError,
-  } = useQuery({
+  const { data: newsCategory, isLoading: categoryIsLoading } = useQuery({
     queryKey: ["NewsCategory", slug],
     queryFn: () => getNewsCategoryBySlug(slug || ""),
     enabled: !!slug,
@@ -147,7 +138,7 @@ function NewsCategory() {
   };
   return (
     <div className="space-y-10">
-      <header className="mb-8 flex flex-col gap-5 px-5 md:px-0 md:flex-row md:items-end md:justify-between">
+      <header className="mb-8 flex flex-col gap-5 px-5 md:flex-row md:items-end md:justify-between md:px-0">
         <div className="flex-1">
           {categoryIsLoading ? (
             <div
@@ -155,21 +146,21 @@ function NewsCategory() {
               aria-busy="true"
               aria-label="در حال بارگذاری دسته‌بندی"
             >
-              <div className="w-2/3 max-w-xs h-8 md:h-10 bg-neutral-800 animate-pulse rounded-lg"></div>
-              <div className="w-16 h-1 bg-neutral-800/70 animate-pulse rounded-full"></div>
-              <div className="w-full max-w-2xl pt-1 flex flex-col gap-1.5">
-                <div className="w-full h-3 bg-neutral-800/70 animate-pulse rounded-sm"></div>
-                <div className="w-5/6 h-3 bg-neutral-800/70 animate-pulse rounded-sm"></div>
-                <div className="w-2/3 h-3 bg-neutral-800/70 animate-pulse rounded-sm"></div>
+              <div className="h-8 w-2/3 max-w-xs animate-pulse rounded-lg bg-neutral-800 md:h-10"></div>
+              <div className="h-1 w-16 animate-pulse rounded-full bg-neutral-800/70"></div>
+              <div className="flex w-full max-w-2xl flex-col gap-1.5 pt-1">
+                <div className="h-3 w-full animate-pulse rounded-sm bg-neutral-800/70"></div>
+                <div className="h-3 w-5/6 animate-pulse rounded-sm bg-neutral-800/70"></div>
+                <div className="h-3 w-2/3 animate-pulse rounded-sm bg-neutral-800/70"></div>
               </div>
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              <h1 className="text-3xl sm:text-4xl font-PeydaMed font-extrabold leading-tight bg-gradient-to-l from-primary-500 via-primary-500 to-primary-500 bg-clip-text text-transparent">
+              <h1 className="bg-gradient-to-l from-primary-500 via-primary-500 to-primary-500 bg-clip-text font-PeydaMed text-3xl font-extrabold leading-tight text-transparent sm:text-4xl">
                 {newsCategory?.title}
               </h1>
               <AccentBar />
-              <p className="max-w-2xl text-sm sm:text-base leading-7 text-neutral-400">
+              <p className="max-w-2xl text-sm leading-7 text-neutral-400 sm:text-base">
                 {newsCategory?.description}
               </p>
             </div>
@@ -222,7 +213,7 @@ function NewsCategory() {
           )}
         </div>
       </header>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {render()}
         {isFetchingNextPage &&
           Array.from({ length: 12 }).map((_, index) => (

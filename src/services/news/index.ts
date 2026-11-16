@@ -1,4 +1,4 @@
-import { NewsFilterOptions, PaginatedResponse } from "../../types/common.types";
+import { NewsFilterOptions } from "../../types/common.types";
 import { Tables } from "../../types/database.types";
 import { supabase } from "../../utils/supabase";
 import { News, NewsQuery } from "./queries";

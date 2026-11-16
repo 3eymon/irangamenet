@@ -1,6 +1,6 @@
 
 import { Navigate, Outlet, useMatch } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const AUTH_PATH = "/auth";
 const COMPLETE_PROFILE_PATH = "/auth/complete-profile";

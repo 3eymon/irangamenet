@@ -10,7 +10,7 @@ import { MdDriveFileRenameOutline } from "react-icons/md";
 import { BiRename } from "react-icons/bi";
 import { Button } from "../../../components/ui/Button";
 import { LuDices } from "react-icons/lu";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
 
 type CompleteProfileForm = {

@@ -6,12 +6,11 @@ import {
   HeartIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { useAuth } from "../../contexts/AuthContext";
 import Image from "../ui/Image";
 import { Button } from "../ui/Button";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useAuth } from "../../hooks/useAuth";
 
 const PROFILE_NAV_ITEMS = [
   { title: "صفحه اصلی", link: "/profile", icon: UserIcon, end: true },

@@ -15,7 +15,6 @@ import { getAllProducers } from "../../services/producers";
 import { getAllGames } from "../../services/games";
 import { sliderCardsType } from "../../types/card.types";
 import { GameFilterOptions, NewsFilterOptions } from "../../types/common.types";
-import { useMemo } from "react";
 const CARD_LIMIT = 7;
 function Home() {
   const popularNewsQuery = useQuery({

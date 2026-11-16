@@ -1,24 +1,25 @@
+
 import { useEffect, useState } from "react";
 
-export default function useInc(limt: number) {
-  const [value, seValue] = useState(0);
-  const limiter = limt;
+export default function useInc(limit: number) {
+  const [value, setValue] = useState(0);
+
   useEffect(() => {
-    const incrementer = setInterval(() => {
-      seValue((c) => {
-        if (c < limiter) {
-          if (limiter % 5 === 0) {
-            return c + 5;
-          } else if (limiter % 2 === 0) {
-            return c + 2;
-          } else {
-            return c + 1;
-          }
+    const increment = limit % 5 === 0 ? 5 : limit % 2 === 0 ? 2 : 1;
+
+    const interval = setInterval(() => {
+      setValue((current) => {
+        if (current >= limit) {
+          clearInterval(interval);
+          return current;
         }
-        clearInterval(incrementer);
-        return c;
+
+        return Math.min(current + increment, limit);
       });
-    }, 0);
-  }, [limiter]);
-  return [value];
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [limit]);
+
+  return value;
 }

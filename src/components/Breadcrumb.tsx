@@ -1,4 +1,3 @@
-import { clsx } from "clsx";
 import { Link } from "react-router-dom";
 import { cn } from "../utils/cn";
 
@@ -30,7 +29,7 @@ export default function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
 
         return (
           <div
-            key={`${item.label}-${index}`}
+            key={`${item.label}-${new Date().toISOString()}`}
             className="flex min-w-0 items-center gap-2"
           >
             <span aria-hidden="true">/</span>

@@ -14,7 +14,6 @@ import {
 import { Ref } from "react";
 import { News } from "../../services/news/queries";
 import { extractAuthorName } from "../../utils/extractAuthorName";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { ClockIcon } from "@heroicons/react/24/solid";
 type CardProps = {
   ref?: Ref<HTMLDivElement>;

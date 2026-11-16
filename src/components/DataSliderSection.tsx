@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import EmptyState from "./EmptyState";
 import SliderCards, { Loader } from "./ui/SliderCards";
 import { CollectionItem, sliderCardsType } from "../types/card.types";
+import { SwiperProps } from "swiper/react";
 
 type DataSliderSectionProps<T extends CollectionItem> = {
   data: T[] | null | undefined;
@@ -10,7 +11,7 @@ type DataSliderSectionProps<T extends CollectionItem> = {
   children?: ReactNode;
   className?: string;
   renderItems?: (items: T[]) => ReactNode;
-  sliderProps?: Record<string, any>;
+  sliderProps?: SwiperProps;
 };
 
 export default function DataSliderSection<T extends CollectionItem>({

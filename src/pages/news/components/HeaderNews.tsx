@@ -163,6 +163,7 @@ export function PopularCard({ data }: { data: News }) {
           <p className="text-xs text-gray-300 xl:text-sm">
             {data.categories.map((category) => (
               <Link
+                key={category.slug}
                 to={`/news/category/${category.slug}`}
                 className="pl-2 text-red-500 hover:underline"
               >

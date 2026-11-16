@@ -8,8 +8,6 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   wrapperClassName?: string;
   iconClassName?: string;
 
-  containerClassName?: string;
-
   onValueChange?: (value: string) => void;
 };
 
@@ -17,7 +15,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     icon,
     wrapperClassName,
-    containerClassName,
     iconClassName,
     className,
     onChange,
