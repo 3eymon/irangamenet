@@ -1,8 +1,22 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Iran Game Net 🎮
 
-Currently, two official plugins are available:
+A gaming platform for discovering games and reading gaming news.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Browse and explore games
+- Read gaming news
+- Search and filter games
+- User authentication
+- Responsive design
+
+## Tech Stack
+- React
+- TypeScript
+- Tailwind CSS
+- Supabase
+- TanStack Query
+- Material UI
+
+## Live Demo
+[View Live Demo](https://3eymon.github.io/irangamenet)
