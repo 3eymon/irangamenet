@@ -58,7 +58,7 @@ function ScreenshotGallery({ screenshots, title }: Props) {
 
           return (
             <button
-              key={`${screenshot}-${index}`}
+              key={screenshot}
               type="button"
               onClick={() => setOpenIndex(index)}
               aria-label={
@@ -192,7 +192,7 @@ function PhotoViewer({ images, title, startIndex, onClose }: ViewerProps) {
           className={swiperClass}
         >
           {images.map((src, i) => (
-            <SwiperSlide key={`${src}-${i}`}>
+            <SwiperSlide key={src}>
               <div
                 onClick={closeOnBackdrop}
                 className="flex h-full w-full items-center justify-center px-4 py-16 sm:px-16"

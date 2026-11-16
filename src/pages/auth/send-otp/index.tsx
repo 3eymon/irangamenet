@@ -4,19 +4,12 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../../components/ui/input";
 import { SiSteam } from "react-icons/si";
 import { MdAlternateEmail } from "react-icons/md";
-import {
-  sendOTP,
-  PENDING_OTP_EMAIL_KEY,
-  VERIFIED_OTP_EMAIL_KEY,
-} from "../../../services/auth";
+import { sendOTP, PENDING_OTP_EMAIL_KEY } from "../../../services/auth";
 import { Button } from "../../../components/ui/Button";
 import { sendOtpSchema } from "../../../schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import {
-  startOtpCooldown,
-  useResendCooldown,
-} from "../../../hooks/useResendCooldown";
+import { startOtpCooldown } from "../../../hooks/useResendCooldown";
 import { isAuthApiError } from "@supabase/supabase-js";
 
 const AUTH_PREVIEW_VIDEOS = [
@@ -44,7 +37,7 @@ function SendOTP() {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SendOtpForm>({
     resolver: zodResolver(sendOtpSchema),
     mode: "onTouched",

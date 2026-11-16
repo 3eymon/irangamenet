@@ -12,7 +12,6 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/outline";
 import Rating from "@mui/lab/Rating/Rating";
-import Image from "../../../components/ui/Image";
 import { getGameById } from "../../../services/games";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
@@ -20,9 +19,7 @@ import { isNotFoundError } from "../../../utils/isNotFoundErr";
 import ErrorState from "../../../components/ErrorState";
 import NotFound from "../../../components/NotFound";
 import Breadcrumb from "../../../components/Breadcrumb";
-import { PhotoIcon } from "@heroicons/react/24/solid";
 import MarkDownContent from "../../../components/MarkDownContent";
-import { createPortal } from "react-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ScreenshotGallery from "../components/ScreenshotGallery";
 
@@ -39,7 +36,6 @@ export default function GamePage() {
   const [favorite, setFavorite] = useState(false);
   const [saved, setSaved] = useState(false);
   const [shareNote, setShareNote] = useState("");
-  const [modal, setModal] = useState(false);
   const around = useRef<HTMLDivElement>(null);
   const scroll = () => {
     around.current?.scrollIntoView({

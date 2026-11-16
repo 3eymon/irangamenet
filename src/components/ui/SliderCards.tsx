@@ -1,7 +1,6 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import Card from "./Card";
-import { ReactNode } from "react";
 import CardSkeleton from "./CardSkeleton";
 import { News } from "../../services/news/queries";
 import { Game } from "../../services/games/queries";
@@ -10,7 +9,7 @@ import { CollectionItem, sliderCardsType } from "../../types/card.types";
 type SliderCardsProps<T extends CollectionItem> = {
   data: T[];
   type: sliderCardsType;
-  sliderProps?: Record<string, any>;
+  sliderProps?: SwiperProps;
 };
 
 export default function SliderCards<T extends CollectionItem>({

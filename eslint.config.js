@@ -42,7 +42,7 @@ export default tseslint.config(
     rules: {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-
+      "react-x/no-array-index-key": "off",
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },

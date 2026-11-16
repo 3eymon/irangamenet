@@ -13,7 +13,7 @@ import z from "zod";
 import { Button } from "../../components/ui/Button";
 import Image from "../../components/ui/Image";
 import Input from "../../components/ui/input";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { displayNameSchema, usernameSchema } from "../../schemas/auth";
 import { removeAvatar, updateProfile } from "../../services/auth";
 import toast from "react-hot-toast";
@@ -64,8 +64,8 @@ function Profile() {
     defaultValues: { display_name: "" },
   });
 
-  const [isUsernameInputActive, setUsernameActive] = useState(false);
-  const [isDisplayNameActive, setDisplayNameActive] = useState(false);
+  const [isUsernameInputActive, setIsUsernameInputActive] = useState(false);
+  const [isDisplayNameActive, setIsDisplayNameActive] = useState(false);
 
   useEffect(() => {
     if (profile) {
@@ -113,8 +113,8 @@ function Profile() {
     onSuccess: async () => {
       await refreshProfile();
       toast.success("اطلاعات با موفقیت بروزرسانی شدند !");
-      setUsernameActive(false);
-      setDisplayNameActive(false);
+      setIsUsernameInputActive(false);
+      setIsDisplayNameActive(false);
       resetField("avatar");
     },
     onError: (error) => {
@@ -321,7 +321,7 @@ function Profile() {
                   if (isDisplayNameActive) {
                     reset({ display_name: profile?.display_name || "" });
                   }
-                  setDisplayNameActive((prev) => !prev);
+                  setIsDisplayNameActive((prev) => !prev);
                 }}
                 variant="outlined"
                 className="absolute left-3.5 top-2 rounded-full p-2"
@@ -363,7 +363,7 @@ function Profile() {
                   if (isUsernameInputActive) {
                     reset({ username: profile?.username || "" });
                   }
-                  setUsernameActive((prev) => !prev);
+                  setIsUsernameInputActive((prev) => !prev);
                 }}
                 variant="outlined"
                 className="absolute left-3.5 top-2 rounded-full p-2"
