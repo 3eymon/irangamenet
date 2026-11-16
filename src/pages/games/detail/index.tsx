@@ -364,7 +364,7 @@ export default function GamePage() {
         </div>
         <img
           onClick={scroll}
-          src="/images/games/88221.png"
+          src="images/games/88221.png"
           className="absolute bottom-20 left-1/2 mx-auto w-6 -translate-x-1/2 animate-bounce cursor-pointer invert animate-duration-[2000ms] animate-infinite animate-ease-linear max-lg:hidden"
         />
       </section>

@@ -8,7 +8,7 @@ function Header({ scroll }: { scroll: () => void }) {
       <div className="flex flex-col md:flex-row  md:gap-20 items-center h-full">
         <div className="relative">
           <img
-            src="/images/games/Character.png"
+            src="images/games/Character.png"
             className=" animate-fade-up [filter:drop-shadow(-5px_20px_7px_black)]"
           />
           <div className="absolute rounded-full shadow-2xl animate-fade-left bg-white/35 backdrop-blur-md top-20 left-12 px-5  py-1 font-PeydaBlack flex flex-col  items-center gap-0 justify-center text-xs p-0 m-0 text-gray-300">
@@ -35,7 +35,7 @@ function Header({ scroll }: { scroll: () => void }) {
       </div>
       <img
         onClick={scroll}
-        src="/images/games/88221.png"
+        src="images/games/88221.png"
         className="w-6 invert mx-auto cursor-pointer animate-bounce animate-infinite animate-ease-linear animate-duration-[2000ms]"
       />
     </div>

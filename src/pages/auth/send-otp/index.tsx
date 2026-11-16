@@ -14,15 +14,15 @@ import { isAuthApiError } from "@supabase/supabase-js";
 
 const AUTH_PREVIEW_VIDEOS = [
   {
-    webm: "/video/trailer/gameplay-1.webm",
-    mp4: "/video/trailer/gameplay-1.mp4",
+    webm: "video/trailer/gameplay-1.webm",
+    mp4: "video/trailer/gameplay-1.mp4",
   },
   {
-    webm: "/video/trailer/gameplay-2.webm",
-    mp4: "/video/trailer/gameplay-2.mp4",
+    webm: "video/trailer/gameplay-2.webm",
+    mp4: "video/trailer/gameplay-2.mp4",
   },
 ];
-const AUTH_PREVIEW_POSTER = "/video/trailer/auth-gameplay-poster-blur.jpg";
+const AUTH_PREVIEW_POSTER = "video/trailer/auth-gameplay-poster-blur.jpg";
 
 type SendOtpForm = {
   email: string;

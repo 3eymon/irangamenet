@@ -262,7 +262,7 @@ export default function Card({ data, type, ref }: CardProps) {
   //             <Link to="/" className="inline-flex gap-1 items-center">
   //               <img
   //                 loading="lazy"
-  //                 src="/images/icon/header/Grand-Theft-Auto-San-Andreas.jpg"
+  //                 src="images/icon/header/Grand-Theft-Auto-San-Andreas.jpg"
   //                 className="w-7 h-7 rounded-full object-cover"
   //                 alt={`${author} سازنده ${category ?? "محتوا"}`}
   //               />

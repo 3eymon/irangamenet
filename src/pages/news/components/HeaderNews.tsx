@@ -36,7 +36,7 @@ function FeaturedNewsSection({
           )}
         >
           <Image
-            src="/images/news/homePage.jpg"
+            src="images/news/homePage.jpg"
             className="hidden h-full w-full scale-x-[-1] animate-fade rounded-xl object-cover sm:block"
             alt=""
           />
