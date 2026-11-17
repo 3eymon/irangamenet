@@ -167,7 +167,7 @@ function Producer() {
           : "text-white";
 
   return (
-    <main className="min-h-screen space-y-9 pb-12 max-md:px-2 max-md:pt-5">
+    <main className="min-h-screen space-y-9 pb-12 max-md:px-5 max-md:pt-5">
       <section className="space-y-5">
         <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
           <Link to="/" className="transition hover:text-white">

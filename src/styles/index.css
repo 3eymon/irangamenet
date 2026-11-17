@@ -61,7 +61,30 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .swiper-pagination {
+    position: static !important;
+    width: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
 
+  .swiper-pagination-bullet {
+    width: 7px;
+    height: 7px;
+    background: #888;
+    opacity: 0.5;
+    margin: 0 !important;
+    transition: all 0.3s ease;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 20px;
+    border-radius: 999px;
+    background: white;
+    opacity: 1;
+  }
   #root {
     min-height: inherit;
   }
@@ -123,15 +146,7 @@
 
 @layer components {
   .btn--primary {
-    @apply flex w-full items-center justify-center rounded-xl
-      bg-gradient-to-r from-primary to-secondary
-      px-5 py-3 text-center text-sm
-      shadow-lg shadow-primary/35 transition ease-linear
-      hover:brightness-105 active:brightness-90
-      focus-visible:outline-none focus-visible:ring-2
-      focus-visible:ring-primary focus-visible:ring-offset-2
-      focus-visible:ring-offset-background
-      lg:text-base;
+    @apply flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-primary to-secondary px-5 py-3 text-center text-sm shadow-lg shadow-primary/35 transition ease-linear hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:brightness-90 lg:text-base;
   }
 
   .gradient {
@@ -161,7 +176,9 @@
     font-size: 16px;
     font-weight: 900;
     transform: perspective(200px) rotateX(15deg);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s;
     will-change: transform;
   }
 
@@ -182,12 +199,16 @@
     --_c: #0000 66%, #20222a 68% 70%, #0000 72%;
 
     background:
-      radial-gradient(var(--_g) 100% 25%, var(--_c)) var(--s) var(--s) / var(--_s) var(--_s),
-      radial-gradient(var(--_g) 0 75%, var(--_c)) var(--s) var(--s) / var(--_s) var(--_s),
+      radial-gradient(var(--_g) 100% 25%, var(--_c)) var(--s) var(--s) /
+        var(--_s) var(--_s),
+      radial-gradient(var(--_g) 0 75%, var(--_c)) var(--s) var(--s) / var(--_s)
+        var(--_s),
       radial-gradient(var(--_g) 100% 25%, var(--_c)) 0 0 / var(--_s) var(--_s),
       radial-gradient(var(--_g) 0 75%, var(--_c)) 0 0 / var(--_s) var(--_s),
-      repeating-conic-gradient(var(--c) 0 25%, #0000 0 50%) 0 0 / var(--_s) var(--_s),
-      radial-gradient(var(--_c)) 0 calc(var(--s) / 2) / var(--s) var(--s) var(--c);
+      repeating-conic-gradient(var(--c) 0 25%, #0000 0 50%) 0 0 / var(--_s)
+        var(--_s),
+      radial-gradient(var(--_c)) 0 calc(var(--s) / 2) / var(--s) var(--s)
+        var(--c);
   }
 
   .box {

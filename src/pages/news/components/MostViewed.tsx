@@ -13,7 +13,7 @@ export default function MostViewed({ news }: { news: News[] }) {
       <div className="w-full">
         {topview ? (
           <div key={topview.id} className="w-full">
-            <Link to={String(topview.id)}>
+            <Link to={String(topview.slug)}>
               <Image
                 src={topview.cover_path}
                 className="h-60 w-full rounded-xl bg-gray-400 object-cover transition-all ease-linear hover:brightness-[.8]"

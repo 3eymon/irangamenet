@@ -1,6 +1,7 @@
+
 import type { ReactNode } from "react";
 import EmptyState from "./EmptyState";
-import SliderCards, { Loader } from "./ui/SliderCards";
+import SliderCards from "./ui/SliderCards";
 import { CollectionItem, sliderCardsType } from "../types/card.types";
 import { SwiperProps } from "swiper/react";
 
@@ -23,22 +24,34 @@ export default function DataSliderSection<T extends CollectionItem>({
   renderItems,
   sliderProps,
 }: DataSliderSectionProps<T>) {
-  if (isLoading) return <Loader />;
+  const hasData = !!data?.length;
 
   return (
-    <div>
+    <section>
       {children}
-      {data && data.length > 0 ? (
-        <div className={className}>
-          {renderItems ? (
-            renderItems(data)
+
+      <div className={className}>
+        {isLoading ? (
+          <SliderCards
+            data={[]}
+            type={type}
+            isLoading
+            sliderProps={sliderProps}
+          />
+        ) : hasData ? (
+          renderItems ? (
+            renderItems(data!)
           ) : (
-            <SliderCards data={data} type={type} sliderProps={sliderProps} />
-          )}
-        </div>
-      ) : (
-        <EmptyState />
-      )}
-    </div>
+            <SliderCards
+              data={data!}
+              type={type}
+              sliderProps={sliderProps}
+            />
+          )
+        ) : (
+          <EmptyState />
+        )}
+      </div>
+    </section>
   );
 }
