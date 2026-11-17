@@ -1,92 +1,113 @@
 import { Link, NavLink } from "react-router-dom";
-import { ComponentProps, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useCycle } from "framer-motion";
-import { useDimensions } from "../../hooks/use-dimensions";
+import {
+  ComponentProps,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import { navbarItems } from "./NavbarItems";
 import "./navigation.css";
-import { Backdrop } from "@mui/material";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import Image from "../ui/Image";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "../../hooks/useAuth";
 
-const sidebar = {
-  open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
-    transition: {
-      type: "spring",
-      stiffness: 20,
-      restDelta: 2,
-      zIndex: 9999,
-    },
-  }),
-  closed: {
-    clipPath: "circle(20px at 205px 40px)",
-    transition: {
-      delay: 0.5,
-      type: "spring",
-      stiffness: 400,
-      damping: 40,
-      zIndex: 0,
-    },
-  },
-};
+const RADIUS = 1200;
+const START_RADIUS = 20; 
+const START_SCALE = START_RADIUS / RADIUS;
+const CENTER_OPEN = 40; 
+const CENTER_CLOSED_X = 205; 
+const SHIFT_X = CENTER_CLOSED_X - CENTER_OPEN;
+
+const openTransition = {
+  type: "spring",
+  stiffness: 20,
+  restDelta: 0.02,
+  restSpeed: 0.02,
+} as const;
+
+const closeTransition = {
+  delay: 0.5,
+  type: "spring",
+  stiffness: 400,
+  damping: 40,
+  restDelta: 0.01,
+} as const;
 
 export default function NavigationMobile() {
-  const [isOpen, toggleOpen] = useCycle(false, true);
-  const containerRef = useRef(null);
-  const { height } = useDimensions(containerRef);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = useCallback(() => setIsOpen((v) => !v), []);
+
+  const progress = useMotionValue(0);
+  const x = useTransform(progress, [0, 1], [SHIFT_X, 0]);
+  const scale = useTransform(progress, [0, 1], [START_SCALE, 1]);
+
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      const timeout = setTimeout(() => {
-        document.body.style.overflowY = "auto";
-      }, 1000);
+    const controls = animate(
+      progress,
+      isOpen ? 1 : 0,
+      isOpen ? openTransition : closeTransition,
+    );
+    return () => controls.stop();
+  }, [isOpen, progress]);
 
-      return () => clearTimeout(timeout);
-    }
-
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflowY;
+    document.body.style.overflowY = "hidden";
     return () => {
-      document.body.style.overflowY = "auto";
+      document.body.style.overflowY = prev;
     };
   }, [isOpen]);
+
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 700px)");
-
     const handleMediaChange = (event: MediaQueryListEvent) => {
-      if (!event.matches) {
-        if (isOpen) toggleOpen();
-      }
+      if (!event.matches) setIsOpen(false);
     };
-
     mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
 
-    return () => {
-      mediaQuery.removeEventListener("change", handleMediaChange);
-    };
-  }, [isOpen, toggleOpen]);
   return (
     <motion.div
       initial={false}
       animate={isOpen ? "open" : "closed"}
-      custom={height}
-      ref={containerRef}
       className="absolute inset-0 sm:hidden"
     >
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isOpen}
-        className="!z-30"
-        onClick={() => toggleOpen()}
-      ></Backdrop>
-      <motion.div
-        className="background z-30 w-60 bg-[#29293dda] text-white backdrop-blur"
-        variants={sidebar}
+      <div
+        onClick={toggle}
+        className={`fixed inset-0 z-30 bg-black/50 transition-opacity duration-300 ${
+          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
       />
+
+      <div className="background pointer-events-none absolute bottom-0 right-px top-0 z-30 w-60 overflow-hidden">
+        <motion.div
+          className="absolute rounded-full bg-[#29293df2]"
+          style={{
+            width: RADIUS * 2,
+            height: RADIUS * 2,
+            left: CENTER_OPEN - RADIUS,
+            top: CENTER_OPEN - RADIUS,
+            x,
+            scale,
+            willChange: "transform",
+          }}
+        />
+      </div>
+
       <div className="relative">
-        <Navigation toggle={() => toggleOpen()} isOpen={isOpen} />
-        <MenuToggle toggle={() => toggleOpen()} />
+        <Navigation toggle={toggle} isOpen={isOpen} />
+        <MenuToggle toggle={toggle} />
       </div>
     </motion.div>
   );
@@ -104,7 +125,11 @@ const Path = (props: PathProps) => (
   />
 );
 
-function MenuToggle({ toggle }: { toggle: () => void }) {
+const MenuToggle = memo(function MenuToggle({
+  toggle,
+}: {
+  toggle: () => void;
+}) {
   return (
     <motion.div className="relative">
       <button id="toggle-button" onClick={toggle} className="z-30 pr-2.5">
@@ -138,7 +163,8 @@ function MenuToggle({ toggle }: { toggle: () => void }) {
       </button>
     </motion.div>
   );
-}
+});
+
 const variants = {
   open: {
     transition: { staggerChildren: 0.07, delayChildren: 0.2 },
@@ -147,6 +173,7 @@ const variants = {
     transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
 };
+
 const variantsItem = {
   open: {
     y: 0,
@@ -164,7 +191,7 @@ const variantsItem = {
   },
 };
 
-function Navigation({
+const Navigation = memo(function Navigation({
   toggle,
   isOpen,
 }: {
@@ -173,6 +200,7 @@ function Navigation({
 }) {
   const { user, profile, isLoading, logout, isLoggingOut } = useAuth();
   const [confirmLogout, setConfirmLogout] = useState(false);
+
   return (
     <motion.ul
       variants={variants}
@@ -343,4 +371,4 @@ function Navigation({
       )}
     </motion.ul>
   );
-}
+});
