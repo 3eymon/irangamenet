@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import {
   BookOpenIcon,
+  BuildingOffice2Icon,
   HomeIcon,
   PuzzlePieceIcon,
   VideoCameraIcon,
@@ -36,6 +37,14 @@ export const navbarItems: NavbarItemType[] = [
     link: "/games",
     icon: (
       <PuzzlePieceIcon className="inline-block h-5 w-5 group-aria-[current=page]:[filter:drop-shadow(-25px_0px_10px_#c084fc)]" />
+    ),
+  },
+  {
+    id: 4,
+    title: "سازندگان بازی ",
+    link: "/producers",
+    icon: (
+      <BuildingOffice2Icon className="inline-block h-5 w-5 group-aria-[current=page]:[filter:drop-shadow(-25px_0px_10px_#c084fc)]" />
     ),
   },
   {

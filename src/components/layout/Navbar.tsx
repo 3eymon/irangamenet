@@ -12,7 +12,7 @@ import { navbarItems, NavbarItemType } from "./NavbarItems";
 
 function Navbar() {
   return (
-    <nav className="relative z-[5] flex items-center justify-between px-5 py-5 font-Peyda text-sm max-sm:flex-row-reverse sm:py-2">
+    <nav className="sm:relative sm:z-[5] flex items-center justify-between px-5 py-5 font-Peyda text-sm max-sm:flex-row-reverse sm:py-2">
       <h2 className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-lg font-bold text-transparent">
         ایران گیم نت
       </h2>

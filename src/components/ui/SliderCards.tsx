@@ -7,20 +7,24 @@ import { Game } from "../../services/games/queries";
 import { CollectionItem, sliderCardsType } from "../../types/card.types";
 
 type SliderCardsProps<T extends CollectionItem> = {
-  data: T[];
+  data?: T[];
   type: sliderCardsType;
   sliderProps?: SwiperProps;
+  isLoading?: boolean;
 };
 
+const SKELETON_COUNT = 6;
+
 export default function SliderCards<T extends CollectionItem>({
-  data,
+  data = [],
   type,
   sliderProps,
+  isLoading = false,
 }: SliderCardsProps<T>) {
   const pagination = {
     el: ".swiper-pagination",
     type: "bullets" as const,
-    clickable: true,
+    clickable: !isLoading,
     bulletClass: "bg-gray-600",
     bulletActiveClass: "!w-5 sm:w-6 !bg-gray-400",
     lockClass: "hidden",
@@ -38,6 +42,7 @@ export default function SliderCards<T extends CollectionItem>({
     1280: { slidesPerView: 3.5 },
     1536: { slidesPerView: 4 },
   };
+
   return (
     <Swiper
       breakpoints={breakpoints}
@@ -49,22 +54,33 @@ export default function SliderCards<T extends CollectionItem>({
         nextEl: ".next",
       }}
       modules={[Navigation, Pagination]}
-      className="mt-5"
+      className={`mt-5 ${isLoading ? "pointer-events-none select-none" : ""}`}
+      allowTouchMove={!isLoading}
+      keyboard={{ enabled: !isLoading }}
+      mousewheel={false}
       {...sliderProps}
     >
-      {data.map((item) => {
-        return (
-          <SwiperSlide key={item.id}>
-            {type === sliderCardsType.News ? (
-              <Card type={sliderCardsType.News} data={item as News} />
-            ) : (
-              <Card type={sliderCardsType.Games} data={item as Game} />
-            )}
-          </SwiperSlide>
-        );
-      })}
+      {isLoading
+        ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+            <SwiperSlide key={`skeleton-${i}`}>
+              <CardSkeleton className="block" />
+            </SwiperSlide>
+          ))
+        : data.map((item) => (
+            <SwiperSlide key={item.id}>
+              {type === sliderCardsType.News ? (
+                <Card type={sliderCardsType.News} data={item as News} />
+              ) : (
+                <Card type={sliderCardsType.Games} data={item as Game} />
+              )}
+            </SwiperSlide>
+          ))}
+
       <div className="flex gap-3 w-full justify-center items-center py-2 pt-5">
-        <button className="prev opacity-60 hover:opacity-80 transition-opacity ease-in-out">
+        <button
+          disabled={isLoading}
+          className="prev opacity-60 hover:opacity-80 transition-opacity ease-in-out disabled:pointer-events-none disabled:opacity-30"
+        >
           <svg
             viewBox="0 0 26 30"
             xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +94,10 @@ export default function SliderCards<T extends CollectionItem>({
           </svg>
         </button>
         <div className="swiper-pagination flex gap-1 items-center"></div>
-        <button className="next opacity-60 hover:opacity-80 transition-opacity ease-in-out ">
+        <button
+          disabled={isLoading}
+          className="next opacity-60 hover:opacity-80 transition-opacity ease-in-out disabled:pointer-events-none disabled:opacity-30"
+        >
           <svg
             viewBox="0 0 26 30"
             xmlns="http://www.w3.org/2000/svg"
@@ -93,23 +112,5 @@ export default function SliderCards<T extends CollectionItem>({
         </button>
       </div>
     </Swiper>
-  );
-}
-export function Loader() {
-  return (
-    <div>
-      <div>
-        <div key="1" className="flex justify-between pb-5">
-          <h2 className="text-2xl font-PeydaBlack w-40 h-7 bg-neutral-800/70  animate-pulse rounded mr-4"></h2>
-          <div className="group text-[#bb80ff] font-PeydaMed flex items-center  gap-2 ml-3 w-20 h-5 bg-neutral-800/70  animate-pulse rounded"></div>
-        </div>
-      </div>
-      <div className="flex gap-5">
-        <CardSkeleton />
-        <CardSkeleton className="md:block" />
-        <CardSkeleton className="lg:block" />
-        <CardSkeleton className="2xl:block" />
-      </div>
-    </div>
   );
 }

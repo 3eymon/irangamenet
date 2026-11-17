@@ -124,7 +124,7 @@ function NewsCardPreview({ cards, isLoading = false }: NewsCardPreviewProps) {
         pagination={showSkeleton ? false : pagination}
         autoplay={{ delay: 5_000 }}
         modules={[EffectCoverflow, Pagination, Autoplay]}
-        className={`mySwiper w-full max-w-xl !overflow-visible ${hasError ? "pointer-events-none" : ""}`}
+        className={`mySwiper w-full max-w-xl md:!overflow-visible ${hasError ? "pointer-events-none" : ""}`}
       >
         {hasError
           ? Array.from({ length: 3 }, (_, index) => (
@@ -251,12 +251,13 @@ function HeroSection({
   isLoading: boolean;
 }) {
   return (
-    <>
-      <div className="z-10 mt-8 flex h-full w-full flex-col items-center px-4 sm:mt-28 lg:flex-row">
-        <Texts />
+    <div className="relative z-10 py-20 md:pt-8 flex w-full min-w-0 flex-col items-center overflow-hidden  sm:mt-28 lg:flex-row sm:overflow-visible">
+      <Texts />
+
+      <div className="w-full min-w-0 max-w-full ">
         <NewsCardPreview isLoading={isLoading} cards={data ?? []} />
       </div>
-    </>
+    </div>
   );
 }
 const containerVariants = {

@@ -89,7 +89,11 @@ export default function GamePage() {
 
   const scale = useTransform(scrollY, [0, 600], [1.04, 1.12]);
 
-  const opacity = useTransform(scrollY, [0, 300, 600 ,900], [0.25, 0.1, 0.05 ,0]);
+  const opacity = useTransform(
+    scrollY,
+    [0, 300, 600, 900],
+    [0.25, 0.1, 0.05, 0],
+  );
   if (isLoading) return <GamePageSkeleton />;
   if (isError && !isNotFoundError(error)) {
     return (
@@ -352,14 +356,17 @@ export default function GamePage() {
               )}
             </div>
 
-<div>
-  <div className="mb-4">
-    <h2 className="text-xl font-bold">تصاویر بازی</h2>
-    <AccentBar />
-  </div>
+            <div>
+              <div className="mb-4">
+                <h2 className="text-xl font-bold">تصاویر بازی</h2>
+                <AccentBar />
+              </div>
 
-  <ScreenshotGallery screenshots={game.screenshots} title={game.title} />
-</div>
+              <ScreenshotGallery
+                screenshots={game.screenshots}
+                title={game.title}
+              />
+            </div>
           </aside>
         </div>
         <img

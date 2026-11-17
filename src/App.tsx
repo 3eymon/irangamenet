@@ -16,8 +16,6 @@ import NotFound from "./components/NotFound";
 import GameCategory from "./pages/games/category";
 import GameDiscovery from "./pages/games/discover";
 import TimeAgo from "javascript-time-ago";
-import "swiper/css/effect-coverflow";
-import "swiper/css";
 import fa from "javascript-time-ago/locale/fa";
 import News from "./pages/news";
 import NewsDiscovery from "./pages/news/discover";

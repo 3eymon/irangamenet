@@ -1,5 +1,7 @@
 import "./styles/index.css";
-
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
@@ -24,7 +26,7 @@ const queryClient = new QueryClient({
 createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-    <ScrollToTop />
+      <ScrollToTop />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <App />

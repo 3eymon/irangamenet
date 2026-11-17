@@ -37,8 +37,8 @@ function ProfileLayout() {
   }
 
   return (
-    <div className="flex w-full flex-col items-start gap-5 md:flex-row">
-      <aside className="w-full md:sticky md:top-5 md:max-w-xs">
+    <div className="flex w-full flex-col items-start gap-5 md:flex-row max-md:pt-5">
+      <aside className="w-full md:sticky md:top-5 md:max-w-xs px-1">
         <div className="mx-1 rounded-xl border border-primary-500/20 bg-primary-500/5 p-4">
           <div className="flex items-center gap-3">
             {showSkeleton ? (
@@ -205,7 +205,7 @@ function ProfileLayout() {
         </nav>
       </div>
 
-      <div className="flex min-h-full w-full min-w-0 flex-1 flex-col gap-10 rounded-xl p-2 sm:p-4">
+      <div className="flex min-h-full w-full min-w-0 flex-1 flex-col gap-10 rounded-xl p-2 sm:p-4 max-sm:px-4">
         <Outlet />
       </div>
     </div>
