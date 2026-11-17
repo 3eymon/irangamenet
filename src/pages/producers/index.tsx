@@ -4,7 +4,6 @@ import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
 import { getAllProducers } from "../../services/producers";
 import ErrorState from "../../components/ErrorState";
 import Image from "../../components/ui/Image";
-import TouchRipple from "@mui/material/ButtonBase/TouchRipple";
 import EmptyState from "../../components/EmptyState";
 
 function Producers() {
