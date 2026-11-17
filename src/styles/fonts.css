@@ -1,25 +1,44 @@
 @font-face {
   font-family: "Peyda";
-  src: url("/font/Peyda-Light.ttf") format("truetype");
+  src: url("/font/Peyda-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("/font/Peyda-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Peyda";
-  src: url("/font/Peyda-Medium.ttf") format("truetype");
+  src: url("/font/Peyda-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Peyda";
-  src: url("/font/Peyda-Black.ttf") format("truetype");
+  src: url("/font/Peyda-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Jaro";
-  src: url(/font/Jaro-Regular-VariableFont_opsz.ttf);
+  src: url("/font/Jaro.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-synthesis: none;
+  
 }
