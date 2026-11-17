@@ -67,7 +67,7 @@ function FAQs() {
           </span>
           <img
             loading="lazy"
-            src="images/20945728.png"
+            src="images/faqs.png"
             className="px-10 object-cover"
             width="500px"
             alt="Iran GameCenter FAQs سوالات متداول"
