@@ -1,4 +1,5 @@
 import "./styles/index.css";
+import "./styles/fonts.css";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
