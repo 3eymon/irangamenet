@@ -55,7 +55,6 @@ export default function SliderCards<T extends CollectionItem>({
       }}
       modules={[Navigation, Pagination]}
       className={`mt-5 ${isLoading ? "pointer-events-none select-none" : ""}`}
-      allowTouchMove={!isLoading}
       keyboard={{ enabled: !isLoading }}
       mousewheel={false}
       {...sliderProps}
